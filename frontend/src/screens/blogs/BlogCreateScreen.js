@@ -1,6 +1,6 @@
 import React from 'react'
 
-const NewBlogForm = () => {
+const BlogCreateScreen = () => {
     return (
         <div className="form-container">
             <h2 className="form-heading text-center">Create New Blog</h2>
@@ -24,4 +24,4 @@ const NewBlogForm = () => {
     )
 }
 
-export default NewBlogForm;
+export default BlogCreateScreen;

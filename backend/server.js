@@ -5,6 +5,7 @@ if(process.env.NODE_ENV !== 'production'){
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
+const cors = require('cors');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const session = require('express-session');
@@ -15,10 +16,11 @@ const blogRoutes = require('./routes/blogs.js');
 const userRoutes = require('./routes/users.js');
 const User = require('./models/user')
 
+app.use(cors({ credentials: true, origin: "http://localhost:3000" }))
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
-const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/myblog2021';
+const dbUrl = process.env.DB_URL || 'mongodb+srv://tania:ta123nia456@cluster0.nx2ig.mongodb.net/myBlog2021?retryWrites=true&w=majority';
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true
