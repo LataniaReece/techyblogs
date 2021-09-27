@@ -50,7 +50,7 @@ module.exports.getBlogById = async(req, res) =>{
 // @access  Private
 module.exports.createBlog = async (req, res) => {
     try {
-        const newBlog = new Blog(req.body.blog);
+        const newBlog = new Blog(req.body);
         if(!req.file){
             newBlog.image = {
                 "url": "https://res.cloudinary.com/ddxxsib3q/image/upload/v1632515648/myblog2021/ty46lqzalcvfh8e0u5zi.jpg",
