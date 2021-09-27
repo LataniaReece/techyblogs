@@ -1,6 +1,17 @@
 import React from 'react'
 
 const BlogCreateScreen = () => {
+    const [formData, setFormData] = useState({
+           "blog[title]": '',
+           "blog[text]": '',
+           "blog[image]": ''
+    })
+    
+    const submitHandler = (e) => {
+        e.preventDefault();
+        console.log({...formData});
+    }
+    
     return (
         <div className="form-container">
             <h2 className="form-heading text-center">Create New Blog</h2>
