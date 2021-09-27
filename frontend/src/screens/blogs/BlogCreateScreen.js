@@ -2,8 +2,8 @@ import React from 'react'
 
 const BlogCreateScreen = () => {
     const [formData, setFormData] = useState({
-           title: '',
-           text: '',
+           blog[title]: '',
+           blog[text]: '',
            image: ''
     })
     
@@ -18,11 +18,11 @@ const BlogCreateScreen = () => {
             <form>
                 <div class="mb-4">
                     <label for="title" class="form-label">Title</label>
-                    <input type="text" name="title" class="form-control" id="title" value={formData.title} onChange={(e) => setFormData({ ...formData, title: e.target.value })} />
+                    <input type="text" name="title" class="form-control" id="title" value={formData.blog[title]} onChange={(e) => setFormData({ ...formData, blog[title]: e.target.value })} />
                 </div>
                 <div class="mb-4">
                     <label for="Blog Text" class="form-label">Blog Text</label>
-                    <textarea name="text" class="form-control" id="Blog Text" rows="8" resize="none" value={formData.text} onChange={(e) => setFormData({ ...formData, text: e.target.value })}></textarea>
+                    <textarea name="text" class="form-control" id="Blog Text" rows="8" resize="none" value={formData.blog[text]} onChange={(e) => setFormData({ ...formData, blog[text]: e.target.value })}></textarea>
                 </div>
                 <div class="input-group mb-4">
                     <input type="file" class="form-control" id="file" name="image" value={formData.image} onChange={(e) => setFormData({ ...formData, image: e.target.value })}/>
