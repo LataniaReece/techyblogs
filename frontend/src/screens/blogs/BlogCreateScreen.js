@@ -13,7 +13,7 @@ const BlogCreateScreen = () => {
     }
     
     return (
-        <div className="form-container">
+        <div className="form-container" onSubmit={submitHandler}>
             <h2 className="form-heading text-center">Create New Blog</h2>
             <form>
                 <div class="mb-4">
