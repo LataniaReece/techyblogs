@@ -2,9 +2,9 @@ import React from 'react'
 
 const BlogCreateScreen = () => {
     const [formData, setFormData] = useState({
-           "blog[title]": '',
-           "blog[text]": '',
-           "blog[image]": ''
+           title: '',
+           text: '',
+           image: ''
     })
     
     const submitHandler = (e) => {
@@ -18,14 +18,14 @@ const BlogCreateScreen = () => {
             <form>
                 <div class="mb-4">
                     <label for="title" class="form-label">Title</label>
-                    <input type="text" name="blog[title]" class="form-control" id="title" />
+                    <input type="text" name="title" class="form-control" id="title" value={formData.title} onChange={(e) => setFormData({ ...formData, title: e.target.value })} />
                 </div>
                 <div class="mb-4">
                     <label for="Blog Text" class="form-label">Blog Text</label>
-                    <textarea name="blog[text]" class="form-control" id="Blog Text" rows="8" resize="none"></textarea>
+                    <textarea name="text" class="form-control" id="Blog Text" rows="8" resize="none" value={formData.text} onChange={(e) => setFormData({ ...formData, text: e.target.value })}></textarea>
                 </div>
                 <div class="input-group mb-4">
-                    <input type="file" class="form-control" id="file" name="image" />
+                    <input type="file" class="form-control" id="file" name="image" value={formData.image} onChange={(e) => setFormData({ ...formData, image: e.target.value })}/>
                 </div>
                 <div className="mb-4">
                     <button type="submit" class="btn btn-primary w-100">Submit</button>
