@@ -7,7 +7,7 @@ const { cloudinary } = require('../cloudinary');
 // @access  Public
 module.exports.getBlogs = async (req, res) => {
     try {
-        const blogs = await Blog.find({});
+        const blogs = await Blog.find({}).sort({createdAt: -1});
     
         if (blogs) {
             res.json(blogs)
@@ -49,8 +49,9 @@ module.exports.getBlogById = async(req, res) =>{
 // @route   POST /api/blogs
 // @access  Private
 module.exports.createBlog = async (req, res) => {
+    console.log(req.body)
     try {
-        const newBlog = new Blog(req.body.blog);
+        const newBlog = new Blog(req.body);
         if(!req.file){
             newBlog.image = {
                 "url": "https://res.cloudinary.com/ddxxsib3q/image/upload/v1632515648/myblog2021/ty46lqzalcvfh8e0u5zi.jpg",

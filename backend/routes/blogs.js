@@ -8,7 +8,7 @@ const { isLoggedIn } = require('../middleware');
 
 router.route('/')
     .get(blogs.getBlogs)
-    .post(isLoggedIn, upload.single('image'), blogs.createBlog)
+    .post(upload.single('image'), blogs.createBlog)
 
 router.route('/:id')
     .get(blogs.getBlogById)

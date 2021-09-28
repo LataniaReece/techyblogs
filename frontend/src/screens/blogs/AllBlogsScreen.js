@@ -19,12 +19,11 @@ const AllBlogsScreen = () => {
     return (
         <div>
             <h1>All Blogs</h1>
-            {blogs && blogs.map(blog =>{
-                return <BlogComponent key={blog._id} blog={blog}/>
-            })}
-            {/* {blogs && blogs.map(blog =>{
-                console.log(blog)
-            })} */}
+            <div className="row">
+                {blogs && blogs.map(blog =>{
+                    return <BlogComponent key={blog._id} blog={blog}/>
+                })}
+            </div>
         </div>
     )
 }

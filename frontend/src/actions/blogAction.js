@@ -29,7 +29,7 @@ export const getBlogs = () => async (dispatch) => {
     }
 }
 
-export const createBlog = () => async (dispatch, formData) => {
+export const createBlog = (formData) => async (dispatch) => {
     try {
         dispatch({ type: BLOG_CREATE_REQUEST })
 

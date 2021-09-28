@@ -26,9 +26,9 @@ main {
 form textarea {
   resize: none;
 }
-.blog-container {
+/* .blog-container {
   width: 40%;
-}
+} */
 
 .blog-container .card-img-overlay {
   background-color: rgba(0, 0, 0, 0.5);
