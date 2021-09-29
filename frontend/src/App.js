@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store'
 import './App.css'
@@ -11,6 +11,8 @@ import Navbar from './components/layout/Navbar';
 // Screens
 import AllBlogsScreen from './screens/blogs/AllBlogsScreen';
 import BlogCreateScreen from './screens/blogs/BlogCreateScreen';
+import BlogDetailsScreen from './screens/blogs/BlogDetailsScreen';
+import BlogUpdateScreen from './screens/blogs/BlogUpdateScreen';
 
 const App = () => {
     return (
@@ -20,9 +22,13 @@ const App = () => {
                 <Navbar />
                 <main>
                     <div className="container pt-5" style={{"height": "100vh"}}> 
-                        <Route path='/blogs/new' component={BlogCreateScreen} />
-                        <Route path='/blogs' component={AllBlogsScreen} exact />
-                        <Route path='/' component={HomeComponent} exact />
+                        <Switch>
+                            <Route path='/blogs/new' component={BlogCreateScreen} exact />
+                            <Route path='/blogs/:id/edit' component={BlogUpdateScreen} exact />
+                            <Route path='/blogs/:id' component={BlogDetailsScreen} exact />
+                            <Route path='/blogs' component={AllBlogsScreen} exact />
+                            <Route path='/' component={HomeComponent} exact />
+                        </Switch>
                     </div>
                 </main>
             </Router>

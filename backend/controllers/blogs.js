@@ -7,7 +7,7 @@ const { cloudinary } = require('../cloudinary');
 // @access  Public
 module.exports.getBlogs = async (req, res) => {
     try {
-        const blogs = await Blog.find({}).sort({createdAt: -1});
+        const blogs = await Blog.find({}).sort({createdAt: 1});
     
         if (blogs) {
             res.json(blogs)
@@ -49,17 +49,22 @@ module.exports.getBlogById = async(req, res) =>{
 // @route   POST /api/blogs
 // @access  Private
 module.exports.createBlog = async (req, res) => {
-    console.log(req.body)
+    const {title, text, image} = req.body;
+    // console.log(image)
     try {
-        const newBlog = new Blog(req.body);
-        if(!req.file){
+        const newBlog = new Blog({
+            title,
+            text
+        });
+        if(Object.keys(image).length === 0){
             newBlog.image = {
                 "url": "https://res.cloudinary.com/ddxxsib3q/image/upload/v1632515648/myblog2021/ty46lqzalcvfh8e0u5zi.jpg",
                 "filename": "myblog2021/ty46lqzalcvfh8e0u5zi"
              }
-        } else{
-            newBlog.image = {url: req.file.path, filename: req.file.filename} 
+        }else{
+            newBlog.image = image
         }
+        // console.log(newBlog)
         // newBlog.author = req.user._id;
          await newBlog.save();    
         res.status(201).json(newBlog)
@@ -81,12 +86,9 @@ module.exports.updateBlog = async(req, res)=>{
         if (!blog) {
             return res.status(404).json({ message: 'Blog not found' })
         } else {
-            let updatedBlog = {}
-            if(req.body.blog){
-                updatedBlog = req.body.blog;
-            }           
-            if(req.file){
-                updatedBlog.image = {url: req.file.path, filename: req.file.filename};
+            let updatedBlog = {...req.body}
+            if(Object.keys(updatedBlog.image).length === 0){
+                updatedBlog.image = blog.image
             }
             const savedUpdatedBlog = await Blog.findByIdAndUpdate(id, updatedBlog, {new: true});
             return res.json(savedUpdatedBlog)

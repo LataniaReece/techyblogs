@@ -14,6 +14,7 @@ const MongoStore = require('connect-mongo');
 const ExpressError = require('./utils/ExpressError');
 const blogRoutes = require('./routes/blogs.js');
 const userRoutes = require('./routes/users.js');
+const uploadRoutes = require('./routes/upload.js');
 const User = require('./models/user')
 
 app.use(cors({ credentials: true, origin: "http://localhost:3000" }))
@@ -75,6 +76,7 @@ app.use((req, res, next) =>{
 
 app.use('/api/blogs', blogRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/upload', uploadRoutes);
 
 app.all('*', (req, res, next) =>{
     next(new ExpressError('Page Not Found', 404))

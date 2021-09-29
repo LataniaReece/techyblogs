@@ -1,21 +1,25 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux'
-import { createBlog } from '../../actions/blogAction';
+import { getBlogDetail, updateBlog } from '../../actions/blogAction';
 import Spinner from '../../components/layout/Spinner'
+import Alert from '../../components/layout/Alert';
+import { BLOG_UPDATE_RESET } from '../../actions/actionTypes/blogTypes';
 
-
-const BlogCreateScreen = ({history}) => {
-
+const BlogUpdateScreen = ({match, history}) => {
     const dispatch = useDispatch();
 
     const [title, setTitle] = useState('')
     const [text, setText] = useState('')
     const [image, setImage] = useState({})
     const [uploading, setUploading] = useState(false)
+    const [message, setMessage] = useState('')
 
-    const blogCreate = useSelector(state => state.blogCreate)
-    const { loading: loadingCreate, error: errorCreate, success: successCreate, blog: createdBlog } = blogCreate
+    const blogDetail = useSelector(state => state.blogDetail)
+    const { loading, error, blog } = blogDetail
+
+    const blogUpdate = useSelector(state => state.blogUpdate)
+    const { loading: loadingUpdate, error: errorUpdate, success: successUpdate, blog: updatedBlog } = blogUpdate
 
     const uploadFileHandler = async (e) => {
         const file = e.target.files[0]
@@ -36,7 +40,7 @@ const BlogCreateScreen = ({history}) => {
             setUploading(false)
 
         } catch (error) {
-            console.log(error)
+            setMessage(error)
             setUploading(false)
         }
     }
@@ -44,19 +48,42 @@ const BlogCreateScreen = ({history}) => {
     
     const submitHandler = (e) => {
         e.preventDefault();
-        if(title, text, image){
-            dispatch(createBlog({
+        if(image){
+            if(title, text){
+                dispatch(updateBlog(blog._id, {
+                    title, 
+                    text, 
+                    image
+                }))
+            }
+        } else if(title, text){
+            dispatch(updateBlog(blog._id, {
                 title, 
-                text, 
-                image
+                text
             }))
-        }      
-        history.push('/blogs')
+        }  
+    }       
+
+    useEffect(() =>{
+        if (successUpdate) {
+            dispatch({ type: BLOG_UPDATE_RESET })
+            history.push(`/blogs/${updatedBlog._id}`)
+        } else{
+        if (!blog || !blog.title || blog._id !== match.params.id) {
+            dispatch(getBlogDetail(match.params.id))
+        } else {
+            setTitle(blog.title)
+            setText(blog.text)
+        }
     }
+    }, [match, dispatch, blog, successUpdate])
+    
     
     return (
-        <div className="form-container" onSubmit={submitHandler}>
-            <h2 className="form-heading text-center">Create New Blog</h2>
+        <>
+        {message && <Alert type="danger">{message}</Alert>}
+        <div className="form-container update-blog" onSubmit={submitHandler}>
+            <h2 className="form-heading text-center">Update New Blog</h2>
             <form>
                 <div class="mb-4">
                     <label for="title" class="form-label">Title</label>
@@ -75,7 +102,8 @@ const BlogCreateScreen = ({history}) => {
                 </div>
             </form>
         </div>
+        </>
     )
 }
 
-export default BlogCreateScreen;
+export default BlogUpdateScreen

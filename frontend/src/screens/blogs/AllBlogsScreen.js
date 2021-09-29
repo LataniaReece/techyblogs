@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { getBlogs } from '../../actions/blogAction';
 import BlogComponent from '../../components/blogs/BlogComponent'
+import Alert from '../../components/layout/Alert';
 
 const AllBlogsScreen = () => {
 
@@ -17,11 +18,12 @@ const AllBlogsScreen = () => {
 
 
     return (
-        <div>
+        <div className="blogs-container">
             <h1>All Blogs</h1>
-            <div className="row">
-                {blogs && blogs.map(blog =>{
-                    return <BlogComponent key={blog._id} blog={blog}/>
+            {error && <Alert type="danger">{error}</Alert>}
+            <div className="row justify-content-between">
+                {blogs && blogs.map((blog, index) =>{
+                    return <BlogComponent key={blog._id} blog={blog} first={index === 0 ? true: false}/>
                 })}
             </div>
         </div>
