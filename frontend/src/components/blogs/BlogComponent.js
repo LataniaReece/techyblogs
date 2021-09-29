@@ -9,7 +9,7 @@ const BlogComponent = ({blog, first}) => {
                 <img src={blog.image.url} className="card-img-top" alt={blog.title} />
                 <div class="card-img-overlay p-4">
                   <h5 className="card-title">{blog.title}</h5>
-                  <h6>Posted a few seconds ago</h6>
+                  <h6>{blog.relativeTime}</h6>
               </div>
             </Link>
         ) : (
@@ -22,7 +22,7 @@ const BlogComponent = ({blog, first}) => {
                 <div class="card-body">
                   <h5 class="card-title">{blog.title}</h5>
                   <p class="card-text">{blog.text.length > 50 ? `${blog.text.substring(0,50)}...` : blog.text}</p>
-                  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                  <p class="card-text"><small class="text-muted">{blog.relativeTime}</small></p>
                 </div>
               </div>
             </div>

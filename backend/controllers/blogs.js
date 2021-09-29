@@ -7,7 +7,7 @@ const { cloudinary } = require('../cloudinary');
 // @access  Public
 module.exports.getBlogs = async (req, res) => {
     try {
-        const blogs = await Blog.find({}).sort({createdAt: 1});
+        const blogs = await Blog.find({}).sort({updated_at: -1});
     
         if (blogs) {
             res.json(blogs)

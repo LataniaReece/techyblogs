@@ -37,7 +37,12 @@ const blogSchema = new Schema({
     ]
 }, opts);
 
-blogSchema.virtual('days').get(function(){ 
+blogSchema.virtual('relativeTime').get(function(){ 
+    if(new Date(this.updated_at).getTime() > new Date(this.created_at).getTime()){
+        return `Last updated ${moment(this.updated_at).fromNow()}`
+    } else{
+        return `Posted ${moment(this.created_at).fromNow()}`
+    }
     // const now = moment()
     // const result = moment(createdDate)
     // return `${now} ${result}`
