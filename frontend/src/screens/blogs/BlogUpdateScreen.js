@@ -69,9 +69,6 @@ const BlogUpdateScreen = ({match, history}) => {
     }       
 
     useEffect(() =>{
-        if(!userInfo){
-            history.push(`/login?redirect=/blogs/${match.params.id}/edit`)
-        }
         if (successUpdate) {
             dispatch({ type: BLOG_UPDATE_RESET })
             dispatch({
@@ -82,14 +79,17 @@ const BlogUpdateScreen = ({match, history}) => {
                 }
             })
             history.push(`/blogs/${updatedBlog._id}`)                
-        } else{
+        } 
         if (!blog || !blog.title || blog._id !== match.params.id) {
             dispatch(getBlogDetail(match.params.id))
         } else {
             setTitle(blog.title)
             setText(blog.text)
-        }
-    }
+            if(!userInfo || userInfo._id !== blog.author._id){
+                history.push(`/login`)
+            } 
+        }        
+      
     }, [match, dispatch, blog, successUpdate, history, updatedBlog, userInfo])
     
     

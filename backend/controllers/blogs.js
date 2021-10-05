@@ -85,7 +85,7 @@ module.exports.updateBlog = async(req, res)=>{
             return res.status(404).json({ message: 'Blog not found' })
         } else {
             let updatedBlog = {...req.body}
-            if(Object.keys(updatedBlog.image).length === 0){
+            if(!req.body.image || Object.keys(req.body.image).length === 0){
                 updatedBlog.image = blog.image
             }
             const savedUpdatedBlog = await Blog.findByIdAndUpdate(id, updatedBlog, {new: true});

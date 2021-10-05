@@ -57,8 +57,15 @@ module.exports.logout = (req, res) =>{
 // @route   POST /api/users/:id
 // @access  Public
 module.exports.getUserById = async(req, res) =>{
-    const user = await User.findById(req.params.id);
-    res.json(user);
+    try{
+        const user = await User.findById(req.params.id);
+        console.log(user)
+        const userBlogs = await Blog.find({ author: user._id})
+        res.json({user, userBlogs});
+    }catch(error){
+        console.log(error)
+        return res.status(404).json({ message: error.message})
+    }
 };
 
 

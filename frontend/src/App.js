@@ -64,7 +64,7 @@ const App = () => {
                                         <Switch>
                                         <Route path="/login" component={LoginScreen} exact/>
                                         <Route path="/register" component={RegisterScreen} exact/>
-                                        <Route path="/profile" component={ProfileScreen} exact/>
+                                        <Route path="/profile/:id" component={ProfileScreen} exact/>
                                         <Route path='/blogs/new' component={BlogCreateScreen} exact/>
                                         <Route path='/blogs/:id/edit' component={BlogUpdateScreen} exact/>
                                         <Route path='/blogs/:id' component={BlogDetailsScreen} exact/>

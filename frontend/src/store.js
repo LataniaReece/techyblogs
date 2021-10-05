@@ -13,7 +13,8 @@ import {
 import { 
   userLoginReducer, 
   userRegisterReducer,
-  userLogoutReducer
+  userLogoutReducer,
+  userDetailsReducer
 } from './reducers/userReducers';
 
 const reducer = combineReducers({
@@ -25,6 +26,7 @@ const reducer = combineReducers({
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
   userLogout: userLogoutReducer,
+  userDetails: userDetailsReducer,
   globalAlert: globalAlertReducer,
 })
 

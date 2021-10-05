@@ -34,7 +34,7 @@ const Navbar = () => {
           {(userInfo && userInfo._id) ? (
             <>
               <li className="nav-item">
-                <Link className="nav-link" to="/profile">My Profile</Link>
+                <Link className="nav-link" to={`/profile/${userInfo._id}`}>My Profile</Link>
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="#" onClick={() => logoutHandler()}>Logout</Link>

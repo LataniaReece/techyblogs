@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const blogs = require('../controllers/blogs');
-const { isLoggedIn } = require('../middleware');
+const { isLoggedIn, isAuthor } = require('../middleware');
 
 router.route('/')
     .get(blogs.getBlogs)
@@ -9,7 +9,7 @@ router.route('/')
 
 router.route('/:id')
     .get(blogs.getBlogById)
-    .put(isLoggedIn, blogs.updateBlog)
-    .delete(isLoggedIn, blogs.deleteBlog)
+    .put(isLoggedIn, isAuthor, blogs.updateBlog)
+    .delete(isLoggedIn, isAuthor, blogs.deleteBlog)
 
 module.exports = router;

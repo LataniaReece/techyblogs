@@ -1,24 +1,37 @@
 import React, {useEffect} from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { getUserDetails } from '../../actions/userActions'
+import BlogComponent from '../../components/blogs/BlogComponent'
 
-const ProfileScreen = ({history}) => {
+const ProfileScreen = ({match}) => {
+
+    const dispatch = useDispatch()
+
+    const userDetails = useSelector(state => state.userDetails)
+    const { userInfo: profileUserInfo } = userDetails
 
     const userLogin = useSelector(state => state.userLogin)
-    const { userInfo } = userLogin
+    const { userInfo: loggedInUserInfo } = userLogin
 
     useEffect(() => {
-
-        if (!userInfo) {
-            history.push('/login?redirect=profile')
+        if(!profileUserInfo || !profileUserInfo.user._id){
+            dispatch(getUserDetails(match.params.id))
         }
-    }, [userInfo, history])
+    }, [profileUserInfo, dispatch, match])
 
 
     return (
         <div>
-            <h1>My Profile</h1>
-            {(userInfo && userInfo._id) && (
-                <p>{userInfo.username}</p>
+            <h1>{ profileUserInfo && profileUserInfo.user.username}'s profile</h1>
+            {(profileUserInfo && profileUserInfo.user._id) && (
+                <>
+                <h3>Blogs</h3>
+                <div className="row justify-content-between">
+                    {profileUserInfo.userBlogs && profileUserInfo.userBlogs.map((blog, index) =>{
+                        return <BlogComponent key={blog._id} blog={blog} />
+                    })}
+                </div>
+                </>
             )}
         </div>
     )
