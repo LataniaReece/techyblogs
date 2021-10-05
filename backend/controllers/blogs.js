@@ -7,7 +7,7 @@ const { cloudinary } = require('../cloudinary');
 // @access  Public
 module.exports.getBlogs = async (req, res) => {
     try {
-        const blogs = await Blog.find({}).sort({updated_at: -1});
+        const blogs = await Blog.find({}).sort({updated_at: -1}).populate('author');
     
         if (blogs) {
             res.json(blogs)
@@ -26,7 +26,7 @@ module.exports.getBlogById = async(req, res) =>{
     const { id } = req.params;
     try {
         if (mongoose.Types.ObjectId.isValid(id)) {
-            const blog = await Blog.findById(id)
+            const blog = await Blog.findById(id).populate('author')
 
             if (!blog) {
                 return res.status(404).json({ message: 'Blog not found' })
@@ -39,7 +39,6 @@ module.exports.getBlogById = async(req, res) =>{
         }
 
     } catch (error) {
-        console.log(error)
         res.status(500).json({ message: 'Server Error' })
     }
 
@@ -49,23 +48,22 @@ module.exports.getBlogById = async(req, res) =>{
 // @route   POST /api/blogs
 // @access  Private
 module.exports.createBlog = async (req, res) => {
-    const {title, text, image} = req.body;
-    // console.log(image)
+    console.log(req.user._id)
+    const {title, text} = req.body;
     try {
         const newBlog = new Blog({
             title,
             text
         });
-        if(Object.keys(image).length === 0){
+        if(!req.body.image || Object.keys(req.body.image).length === 0){
             newBlog.image = {
                 "url": "https://res.cloudinary.com/ddxxsib3q/image/upload/v1632515648/myblog2021/ty46lqzalcvfh8e0u5zi.jpg",
                 "filename": "myblog2021/ty46lqzalcvfh8e0u5zi"
              }
         }else{
-            newBlog.image = image
+            newBlog.image = req.body.image
         }
-        // console.log(newBlog)
-        // newBlog.author = req.user._id;
+        newBlog.author = req.user._id;
          await newBlog.save();    
         res.status(201).json(newBlog)
 

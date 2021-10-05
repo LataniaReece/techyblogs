@@ -5,11 +5,11 @@ const { isLoggedIn } = require('../middleware');
 
 router.route('/')
     .get(blogs.getBlogs)
-    .post(blogs.createBlog)
+    .post(isLoggedIn, blogs.createBlog)
 
 router.route('/:id')
     .get(blogs.getBlogById)
-    .put(blogs.updateBlog)
-    .delete(blogs.deleteBlog)
+    .put(isLoggedIn, blogs.updateBlog)
+    .delete(isLoggedIn, blogs.deleteBlog)
 
 module.exports = router;

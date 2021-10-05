@@ -78,9 +78,9 @@ app.use('/api/blogs', blogRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/upload', uploadRoutes);
 
-app.all('*', (req, res, next) =>{
-    next(new ExpressError('Page Not Found', 404))
-})
+// app.all('*', (req, res, next) =>{
+//     next(new ExpressError('Page Not Found', 404))
+// })
 
 const port = process.env.PORT || 5000;
 

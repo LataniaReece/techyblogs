@@ -1,6 +1,9 @@
+const generateToken = require('../utils/generateToken');
 const { cloudinary } = require('../cloudinary');
 const User = require('../models/user');
 const Blog = require('../models/blog');
+const passport = require('passport');
+
 
 // @desc    Register User
 // @route   POST /api/users/register
@@ -28,8 +31,18 @@ module.exports.register = async (req, res, next) =>{
 // @route   POST /api/users/login
 // @access  Public
 module.exports.login = async (req, res) =>{
-    res.json({ message: 'Welcome back!' });
-    console.log(res)
+    passport.authenticate('local', function(err, user, info) {
+        if (!user) { return res.status(404).json({ message: 'Username or password incorrect. Please try again!' }) }
+        if(err) { return res.status(404).json({ message: 'Username or password incorrect. Please try again!' }) }
+        req.logIn(user, function(err) {
+            if(err) { return res.status(404).json({ message: 'Username or password incorrect. Please try again!' }) }
+          return res.json({
+            _id: user._id,
+            username: user.username,
+            token: generateToken(user._id)
+            })
+        });
+      })(req, res);
 };
 
 // @desc    Logout User
@@ -61,7 +74,6 @@ module.exports.updateUser = async (req, res, next) =>{
             updatedUser.image = img;
             await updatedUser.save();
         }  
-        console.log(updatedUser)
         req.login(updatedUser, err => {
             if(err) return next(err);
             res.json({message: 'Successfully updated profile!'});

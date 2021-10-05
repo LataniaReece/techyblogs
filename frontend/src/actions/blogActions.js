@@ -11,7 +11,10 @@ import {
     BLOG_DETAIL_FAIL,
     BLOG_UPDATE_REQUEST,
     BLOG_UPDATE_SUCCESS,
-    BLOG_UPDATE_FAIL
+    BLOG_UPDATE_FAIL,
+    BLOG_DELETE_REQUEST,
+    BLOG_DELETE_SUCCESS,
+    BLOG_DELETE_FAIL
 } from './actionTypes/blogTypes';
 
 export const getBlogs = () => async (dispatch) => {
@@ -110,6 +113,32 @@ export const updateBlog = (id, formData) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: BLOG_UPDATE_FAIL,
+            payload: error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message
+        })
+    }
+}
+
+export const deleteBlog = (id) => async (dispatch) => {
+    try {
+        dispatch({ type: BLOG_DELETE_REQUEST })
+
+        // const { userLogin: { userInfo } } = getState()
+
+        // const config = {
+        //     headers: {
+        //         Authorization: `Bearer ${userInfo.token}`
+        //     },
+        // }
+
+        await axios.delete(`/api/blogs/${id}`)
+
+        dispatch({ type: BLOG_DELETE_SUCCESS })
+
+    } catch (error) {
+        dispatch({
+            type: BLOG_DELETE_FAIL,
             payload: error.response && error.response.data.message
                 ? error.response.data.message
                 : error.message

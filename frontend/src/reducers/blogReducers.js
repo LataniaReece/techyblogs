@@ -12,7 +12,11 @@ import {
     BLOG_UPDATE_RESET,
     BLOG_DETAIL_REQUEST,
     BLOG_DETAIL_SUCCESS,
-    BLOG_DETAIL_FAIL
+    BLOG_DETAIL_FAIL,
+    BLOG_DELETE_REQUEST,
+    BLOG_DELETE_SUCCESS,
+    BLOG_DELETE_FAIL,
+    BLOG_DELETE_RESET
 } from "../actions/actionTypes/blogTypes"
 
 
@@ -70,6 +74,21 @@ export const blogUpdateReducer = (state = { blog: {} }, action) => {
         case BLOG_UPDATE_FAIL:
             return { loading: false, error: action.payload }
         case BLOG_UPDATE_RESET:
+            return {}
+        default:
+            return state
+    }
+}
+
+export const blogDeleteReducer = (state = {}, action) => {
+    switch (action.type) {
+        case BLOG_DELETE_REQUEST:
+            return { loading: true }
+        case BLOG_DELETE_SUCCESS:
+            return { loading: false, success: true }
+        case BLOG_DELETE_FAIL:
+            return { loading: false, error: action.payload }
+        case BLOG_DELETE_RESET:
             return {}
         default:
             return state

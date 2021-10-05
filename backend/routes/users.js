@@ -12,7 +12,7 @@ router.route('/register')
     .post(users.register)
 
 router.route('/login')
-    .post(passport.authenticate('local', {failureRedirect: '/login' }), users.login)
+    .post(users.login)
 
 router.get('/logout', users.logout)
 

@@ -22,6 +22,26 @@ a{
   text-decoration: none !important;
 }
 
+.home{
+  min-height:100vh;
+  background: 
+  linear-gradient(to bottom, rgba(255,255,255, 0) 0%, rgba(0,0,0, 1) 100%),
+   url('https://images.unsplash.com/photo-1566837945700-30057527ade0?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80');
+  /* background:linear-gradient(0deg, rgba(19, 19, 19, 0.3), rgba(0, 0, 0, 0.3)), url(); */
+  background-size:cover;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+  color: white;
+}
+
+.home h1{
+  font-size: 3rem;
+  letter-spacing: 2px;
+  
+}
+
 .form-container {
   width: 40%;
   margin: 0 auto;
