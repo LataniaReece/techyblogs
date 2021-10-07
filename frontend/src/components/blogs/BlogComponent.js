@@ -13,19 +13,16 @@ const BlogComponent = ({blog, first}) => {
               </div>
             </Link>
         ) : (
-            <Link className="blog-container card mb-3 mx-2 col-md-3" to={`/blogs/${blog._id}`}>
-            <div className="row g-0">
-              <div className="col-md-4">
-                <img src={blog.image.url} className="img-responsive rounded-start" alt="..." />
-              </div>
-              <div className="col-md-8">
-                <div className="card-body">
-                  <h5 className="card-title">{blog.title}</h5>
-                  <p className="card-text">Written by {blog.author.username}</p>
-                  <p className="card-text">{blog.text.length > 50 ? `${blog.text.substring(0,50)}...` : blog.text}</p>
-                  <p className="card-text"><small className="text-muted">{blog.relativeTime}</small></p>
+            <Link className="blog-container mx-3 card mb-3 col-md-4 not-first" to={`/blogs/${blog._id}`}>
+              <div class="card bg-dark text-white">
+                <div className="img-container">
+                <img src={blog.image.url} class="card-img" alt="..." />
                 </div>
-              </div>
+                <div class="card-img-overlay">
+                  <h5 class="card-title">{blog.title}</h5>
+                  <p class="card-text">Written by {blog.author.username}</p>
+                  <p class="card-text">{blog.relativeTime}</p>
+                </div>
             </div>
           </Link>
         )}

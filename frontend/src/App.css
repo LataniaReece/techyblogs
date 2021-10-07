@@ -60,29 +60,37 @@ form textarea {
   padding-left: 0 !important;
 }
 
-.blogs-container .col-md-12{
+.blog-container.first{
   height: 55vh;
+  transition: 0.15s;
+  color: white;
 }
 
-.blogs-container .col-md-3{
-  height: 225px;
-  width: 24rem;
+.blog-container.first:hover {
+  transform: scale(1.01);
 }
 
-.blogs-container .col-md-3 img{
-  height: 225px;
-}
-
- .blog-container.first .card-title {
+.blog-container.first .card-title {
   font-size: 3rem;
   color: white;
  }
 
- .blog-container.col-md-3{
-   color: black;
- }
- .blog-container.first {
-   color: white;
+.blog-container.col-md-4{
+  color: black;
+  transition: 0.15s;
+  width: 25rem;
+} 
+
+.blog-container.col-md-4 img{
+  opacity: .5;
+}
+
+.blog-container.col-md-4 .card-title{
+  font-size: 2.2rem;
+}
+
+ .blog-container.col-md-4:hover {
+   transform: scale(1.05);
  }
 
  .blog-container:hover .card-title{
