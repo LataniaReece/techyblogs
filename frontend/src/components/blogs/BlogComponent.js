@@ -13,7 +13,7 @@ const BlogComponent = ({blog, first}) => {
               </div>
             </Link>
         ) : (
-            <Link className="blog-container mx-3 card mb-3 col-md-4 not-first" to={`/blogs/${blog._id}`}>
+            <Link className="blog-container card mb-3 col-md-4 not-first" to={`/blogs/${blog._id}`}>
               <div class="card bg-dark text-white">
                 <div className="img-container">
                 <img src={blog.image.url} class="card-img" alt="..." />
