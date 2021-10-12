@@ -30,7 +30,7 @@ const AllBlogsScreen = ({history, location}) => {
                 <>
                 {error && <Alert type="danger">{error}</Alert>}
                 {successMessage && <Alert type="success">{successMessage}</Alert>}
-                <div className="row flex-wrap justify-content-center">
+                <div className="row flex-wrap justify-content-between">
                     {blogs && blogs.map((blog, index) =>{
                         return <BlogComponent key={blog._id} blog={blog} first={index === 0 ? true: false}/>
                     })}
