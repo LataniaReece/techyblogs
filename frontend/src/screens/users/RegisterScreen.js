@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { SET_GLOBAL_ALERT } from '../../actions/actionTypes/globalAlertTypes'
 import { register } from '../../actions/userActions'
@@ -65,6 +66,9 @@ const RegisterScreen = ({history, location}) => {
             </div>
             <div className="mb-4">
                 <button type="submit" class="btn btn-primary w-100">Submit</button>
+            </div>
+            <div className="mb-4">
+                <p className="text-muted">Already have an account? <Link to="/login">Sign In Here</Link></p>
             </div>
         </form>
     </div>

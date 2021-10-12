@@ -40,6 +40,13 @@ export const login = (username, password) => async (dispatch) => {
         })        
 
         localStorage.setItem('userInfo', JSON.stringify(data))
+        dispatch({
+            type: SET_GLOBAL_ALERT,
+            payload: {
+                alert: 'Welcome Back!',
+                alertType: 'success'
+            }
+        })
     } catch (error) {
         dispatch({
             type: USER_LOGIN_FAIL,
