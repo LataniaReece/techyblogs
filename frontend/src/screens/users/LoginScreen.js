@@ -28,7 +28,12 @@ const LoginScreen = ({history, location}) => {
                     alertType: 'success'
                 }
             })
-            history.push(redirect)
+            history.push({
+                pathname: redirect,
+                state: {
+                    message: "my message"
+                }
+            })
         }
     }, [success, history, dispatch, redirect, userInfo])
 
