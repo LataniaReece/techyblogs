@@ -21,12 +21,6 @@ import RegisterScreen from './screens/users/RegisterScreen';
 import ProfileScreen from './screens/users/ProfileScreen';
 import { RESET_GLOBAL_ALERT } from './actions/actionTypes/globalAlertTypes';
 
-import ReactNotification from 'react-notifications-component'
-
-import { store as reactNotificationStore } from 'react-notifications-component';
-import 'animate.css'
-import 'react-notifications-component/dist/theme.css'
-
 const AppWrapper = () => {
 
     return (
@@ -45,54 +39,28 @@ const App = () => {
     const dispatch = useDispatch()
     let history = useHistory()
 
-    // // if(location.state && location.state.successMessage && location.state.successMessage !== ''){
-    // //     setSuccessMessage(location.state.successMessage)
-    // //     history.replace({ state: { successMessage: ''}});
-    // // }
-
-    // useEffect(() =>{
-    //     console.log(props)
-    // }, [])
-    // let [count, setCount] = useState(0)
-    // const [message, setMessage] = useState('')
-    // const [alertType, setAlertType] = useState('')
-    // const dispatch = useDispatch();
-
     const globalAlert = useSelector(state => state.globalAlert)
     const { alert: globalAlertMessage } = globalAlert
 
-    // useEffect(() =>{
-    //     if(globalAlertMessage){
-    //         setMessage(globalAlertMessage.alert)
-    //         dispatch({ type: RESET_GLOBAL_ALERT})
-    //     }
+    useEffect(() =>{
+        if(globalAlertMessage){
+            setMessage(globalAlertMessage.alert)
+            dispatch({ type: RESET_GLOBAL_ALERT})
+            setTimeout(() =>{
+                setMessage('')
+            }, 5000)
+            if(localStorage.getItem('alert')){
+                localStorage.removeItem('alert')
+            }
+        }
 
-    // }, [globalAlertMessage, globalAlert])
+    }, [globalAlertMessage, globalAlert])
 
  
 
     useEffect(() => {
         console.log(history)
     }, []);
-
-  
-    const handleClick = () =>{
-        reactNotificationStore.addNotification({
-            title: 'This is an Alert',
-            message: 'Tom added the card',
-            type: 'success',
-            container: 'top-left',
-            insert: 'top',
-            animationIn: ["animated", "fadeIn"],
-            animationOut: ["animated", "fadeOut"],
-
-            dismiss: {
-                duration: 2000,
-                showIcon: true,
-            },
-            width: 600
-        })
-    }
 
     return (
         <Router>                                   
@@ -102,9 +70,7 @@ const App = () => {
                     <main>
                         <Navbar />        
                             <div className="container pt-5" style={{"height": "100vh"}}> 
-                                <ReactNotification />
-                                <button className="btn btn-primary" onClick={handleClick}>Hello</button>
-                                { message && <Alert type="success">{message}</Alert>}
+                                { message && <Alert type="success" dismissable={true}>{message}</Alert>}
                                 <Switch>
                                 <Route path="/login" component={LoginScreen} exact/>
                                 <Route path="/register" component={RegisterScreen} exact/>

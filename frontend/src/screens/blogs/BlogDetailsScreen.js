@@ -19,6 +19,11 @@ const BlogDetailsScreen = ({match, history}) =>{
     const blogDelete = useSelector(state => state.blogDelete)
     const { loading: loadingDelete, error: errorDelete, success: successDelete } = blogDelete
 
+    function createMarkup(htmlString) {
+        return {__html: htmlString};
+      }
+      
+
     useEffect(() =>{
         if(successDelete){
             dispatch({type: BLOG_DELETE_RESET})
@@ -63,7 +68,7 @@ const BlogDetailsScreen = ({match, history}) =>{
                         </>
                     )}                    
                     <img src={blog.image.url} className="card-img-top my-3" alt={blog.title} />
-                    <p className="content">{blog.text}</p>                   
+                    <p className="content" dangerouslySetInnerHTML={createMarkup(blog.text)}></p>                   
                 </div>
             )}
             </>

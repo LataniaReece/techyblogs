@@ -28,7 +28,7 @@ const AllBlogsScreen = ({history, location}) => {
             <h1>All Blogs</h1>
             {loading ? <Spinner /> : (
                 <>
-                {error && <Alert type="danger">{error}</Alert>}
+                {error && <Alert type="danger" dismissable={false}>{error}</Alert>}
                 {successMessage && <Alert type="success">{successMessage}</Alert>}
                 <div className="row flex-wrap justify-content-between">
                     {blogs && blogs.map((blog, index) =>{

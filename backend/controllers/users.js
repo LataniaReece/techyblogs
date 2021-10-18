@@ -20,7 +20,11 @@ module.exports.register = async (req, res, next) =>{
         registeredUser.save();
         req.login(registeredUser, err => {
             if(err) return res.status(404).json({ message: 'Error logging in user, please try again' })
-            res.json({ message: 'You have successfully registered!' })
+            return res.json({
+                _id: user._id,
+                username: user.username,
+                token: generateToken(user._id)
+                })
         })
     }catch(error){
         return res.status(404).json({ message: error.message})

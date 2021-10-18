@@ -17,23 +17,18 @@ const LoginScreen = ({history, location}) => {
     const redirect = location.search ? location.search.split('=')[1] : '/blogs'
 
     useEffect(() =>{
-        if(userInfo){
-            return history.push(redirect)
-        }
         if(success){
             dispatch({
                 type: SET_GLOBAL_ALERT,
                 payload: {
-                    alert: 'Welcome Back!',
+                    alert: 'Welcome back!',
                     alertType: 'success'
                 }
             })
-            history.push({
-                pathname: redirect,
-                state: {
-                    message: "my message"
-                }
-            })
+            history.push(redirect)
+        }
+        if(userInfo){
+            return history.push(redirect)
         }
     }, [success, history, dispatch, redirect, userInfo])
 

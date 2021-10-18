@@ -40,13 +40,13 @@ export const login = (username, password) => async (dispatch) => {
         })        
 
         localStorage.setItem('userInfo', JSON.stringify(data))
-        dispatch({
-            type: SET_GLOBAL_ALERT,
-            payload: {
-                alert: 'Welcome Back!',
-                alertType: 'success'
-            }
-        })
+        // dispatch({
+        //     type: SET_GLOBAL_ALERT,
+        //     payload: {
+        //         alert: 'Welcome Back!',
+        //         alertType: 'success'
+        //     }
+        // })
     } catch (error) {
         dispatch({
             type: USER_LOGIN_FAIL,
@@ -115,6 +115,13 @@ export const register = (username, email, password) => async (dispatch) => {
             type: USER_LOGIN_SUCCESS,
             payload: data
         })
+        // dispatch({
+        //     type: SET_GLOBAL_ALERT,
+        //     payload: {
+        //         alert: "Welcome to Latania's Techy Road!",
+        //         alertType: 'success'
+        //     }
+        // })
 
         localStorage.setItem('userInfo', JSON.stringify(data))
     } catch (error) {

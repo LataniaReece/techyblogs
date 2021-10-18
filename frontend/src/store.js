@@ -45,7 +45,7 @@ if (localStorage.getItem('alert') !== "undefined" && localStorage.getItem('alert
   alertFromStorage = null
 }
 
-const initialState = {userLogin: { userInfo: userInfoFromStorage }, globalAlert: { alert: alertFromStorage}};
+const initialState = {userLogin: { userInfo: userInfoFromStorage }, globalAlert: { alert: alertFromStorage }};
 
 const middleware = [thunk];
 

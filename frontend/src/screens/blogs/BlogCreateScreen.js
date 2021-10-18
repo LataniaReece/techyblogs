@@ -1,6 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux'
+import { Editor } from '@tinymce/tinymce-react';
 import { createBlog } from '../../actions/blogActions';
 import Spinner from '../../components/layout/Spinner'
 import Alert from '../../components/layout/Alert';
@@ -10,6 +11,13 @@ import { SET_GLOBAL_ALERT } from '../../actions/actionTypes/globalAlertTypes';
 const BlogCreateScreen = ({history}) => {
 
     const dispatch = useDispatch();
+
+    const editorRef = useRef(null);
+    const log = () => {
+        if (editorRef.current) {
+          console.log(editorRef.current.getContent());
+        }
+      };
 
     const [title, setTitle] = useState('')
     const [text, setText] = useState('')
@@ -64,6 +72,11 @@ const BlogCreateScreen = ({history}) => {
     
     const submitHandler = (e) => {
         e.preventDefault();
+
+        if (editorRef.current) {
+            setText(editorRef.current.getContent())
+        }
+
         if(title && text && image){
             dispatch(createBlog({
                 title, 
@@ -84,8 +97,25 @@ const BlogCreateScreen = ({history}) => {
                         <input type="text" name="title" class="form-control" id="title" value={title} onChange={(e) => setTitle(e.target.value)} />
                     </div>
                     <div class="mb-4">
-                        <label for="Blog Text" class="form-label">Blog Text</label>
-                        <textarea name="text" class="form-control" id="Blog Text" rows="8" resize="none" value={text} onChange={(e) => setText(e.target.value)}></textarea>
+                        <Editor
+                        apiKey="uq26sqh6ptu3m1qypa8quh5frkf26gd79zb02c1862hq2qxh"
+                        onInit={(evt, editor) => editorRef.current = editor}
+                        initialValue="<p>This is the initial content of the editor.</p>"
+                        init={{
+                        height: 500,
+                        menubar: false,
+                        plugins: [
+                            'advlist autolink lists link image charmap print preview anchor',
+                            'searchreplace visualblocks code fullscreen',
+                            'insertdatetime media table paste code help wordcount'
+                        ],
+                        toolbar: 'undo redo | formatselect | ' +
+                        'bold italic backcolor | alignleft aligncenter ' +
+                        'alignright alignjustify | bullist numlist outdent indent | ' +
+                        'removeformat | help',
+                        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+                        }}
+                        />
                     </div>
                     <div class="input-group mb-4">
                         <input type="file" class="form-control" id="file" name="image" onChange={uploadFileHandler}/>
@@ -95,7 +125,7 @@ const BlogCreateScreen = ({history}) => {
                         <button  utton type="submit" class="btn btn-primary w-100" disabled={uploading && true}>Submit</button>
                     </div>
                 </form>
-            )}        
+            )} 
         </div>
     )
 }
