@@ -59,7 +59,7 @@ const BlogDetailsScreen = ({match, history}) =>{
             { (blog && blog._id) && (
                 <div className="blog-details">
                     <h2 className="mb-2">{blog.title}</h2>                    
-                    <p><small className="text-muted">{blog.relativeTime} | Written by <Link to={`/profile/${blog.author._id}`}>{blog.author.username}</Link></small></p>
+                    <p><small className="text-muted blog-info">{blog.relativeTime} | Written by <Link to={`/profile/${blog.author._id}`}>{blog.author.username}</Link></small></p>
                     {(userInfo && userInfo._id && userInfo._id === blog.author._id) && (
                         <>
                         <Link to={`/blogs/${blog._id}/edit`}><button type="button" className="btn btn-primary btn-sm me-2">Edit Blog</button></Link>

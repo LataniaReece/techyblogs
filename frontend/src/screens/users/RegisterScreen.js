@@ -43,7 +43,7 @@ const RegisterScreen = ({history, location}) => {
         }
     }
     return (
-        <div className="form-container" onSubmit={submitHandler}>
+        <div className="form-container auth-form" onSubmit={submitHandler}>
         <h2 className="form-heading text-center">Register</h2>
         {error && <Alert type="danger">{error}</Alert>}
         {message && <Alert type="danger">{message}</Alert>}

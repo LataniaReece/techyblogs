@@ -13,10 +13,6 @@ module.exports.register = async (req, res, next) =>{
         const {email, username, password } = req.body;
         const user = new User({ email, username});
         const registeredUser = await User.register(user, password);
-        registeredUser.image =  {
-            url: 'https://res.cloudinary.com/ddxxsib3q/image/upload/v1632307014/webthoughts/wsryclnogebaubye3kej.jpg',
-            filename: 'webthoughts/wsryclnogebaubye3kej'
-        }
         registeredUser.save();
         req.login(registeredUser, err => {
             if(err) return res.status(404).json({ message: 'Error logging in user, please try again' })
@@ -63,7 +59,7 @@ module.exports.logout = (req, res) =>{
 module.exports.getUserById = async(req, res) =>{
     try{
         const user = await User.findById(req.params.id);
-        const userBlogs = await Blog.find({ author: user._id})
+        const userBlogs = await Blog.find({ author: user._id}).sort({updated_at: -1}).populate('author');
         res.json({user, userBlogs});
     }catch(error){
         return res.status(404).json({ message: error.message})
@@ -77,12 +73,7 @@ module.exports.getUserById = async(req, res) =>{
 module.exports.updateUser = async (req, res, next) =>{
     try{
         const id = req.params.id;
-        const updatedUser = await User.findByIdAndUpdate(id, {...req.body.user}, { new: true });
-        if(req.file){
-            const img = {url: req.file.path, filename: req.file.filename};
-            updatedUser.image = img;
-            await updatedUser.save();
-        }  
+        const updatedUser = await User.findByIdAndUpdate(id, {...req.body}, { new: true }); 
         req.login(updatedUser, err => {
             if(err) return next(err);
             res.json({message: 'Successfully updated profile!'});

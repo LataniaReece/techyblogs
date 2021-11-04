@@ -1,5 +1,8 @@
 import axios from 'axios'
 import { 
+    USER_DELETE_FAIL,
+    USER_DELETE_REQUEST,
+    USER_DELETE_SUCCESS,
     USER_DETAILS_FAIL,
     USER_DETAILS_REQUEST,
     USER_DETAILS_SUCCESS,
@@ -13,8 +16,6 @@ import {
     USER_REGISTER_REQUEST,
     USER_REGISTER_SUCCESS
 } from "./actionTypes/userTypes"
-import { SET_GLOBAL_ALERT } from './actionTypes/globalAlertTypes'
-
 
 export const login = (username, password) => async (dispatch) => {
     try {
@@ -115,13 +116,6 @@ export const register = (username, email, password) => async (dispatch) => {
             type: USER_LOGIN_SUCCESS,
             payload: data
         })
-        // dispatch({
-        //     type: SET_GLOBAL_ALERT,
-        //     payload: {
-        //         alert: "Welcome to Latania's Techy Road!",
-        //         alertType: 'success'
-        //     }
-        // })
 
         localStorage.setItem('userInfo', JSON.stringify(data))
     } catch (error) {
@@ -135,7 +129,6 @@ export const register = (username, email, password) => async (dispatch) => {
 }
 
 export const getUserDetails = (id) => async (dispatch) => {
-    console.log(id)
     try {
         dispatch({ type: USER_DETAILS_REQUEST })
 
@@ -149,6 +142,41 @@ export const getUserDetails = (id) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: USER_DETAILS_FAIL,
+            payload: error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message
+        })
+    }
+}
+
+export const deleteUser = (id) => async (dispatch) => {
+    try {
+        dispatch({ type: USER_DELETE_REQUEST })
+
+        // const { userLogin: { userInfo } } = getState()
+
+        // const config = {
+        //     headers: {
+        //         Authorization: `Bearer ${userInfo.token}`
+        //     },
+        // }
+
+        await axios.delete(`/api/users/${id}`)
+
+        dispatch({ type: USER_DELETE_SUCCESS })
+
+        dispatch({ type: USER_LOGOUT_SUCCESS })        
+
+        localStorage.removeItem('userInfo')
+        localStorage.setItem('alert', JSON.stringify({
+            'alert': 'User Deleted!',
+            'alertType': 'success'
+        }))
+        window.location.href = '/blogs'
+
+    } catch (error) {
+        dispatch({
+            type: USER_DELETE_FAIL,
             payload: error.response && error.response.data.message
                 ? error.response.data.message
                 : error.message

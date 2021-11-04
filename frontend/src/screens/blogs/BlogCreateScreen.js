@@ -13,16 +13,13 @@ const BlogCreateScreen = ({history}) => {
     const dispatch = useDispatch();
 
     const editorRef = useRef(null);
-    const log = () => {
-        if (editorRef.current) {
-          console.log(editorRef.current.getContent());
-        }
-      };
 
+  
     const [title, setTitle] = useState('')
     const [text, setText] = useState('')
     const [image, setImage] = useState({})
     const [uploading, setUploading] = useState(false)
+    const [message, setMessage] = useState('')
 
     const userLogin = useSelector (state => state.userLogin)
     const { userInfo } = userLogin
@@ -33,6 +30,14 @@ const BlogCreateScreen = ({history}) => {
     useEffect(() =>{
         if(!userInfo || !userInfo._id){
             history.push('/login?redirect=/blogs/new')
+            dispatch({
+            type: SET_GLOBAL_ALERT,
+            payload: {
+                alert: 'You have to sign in first!',
+                alertType: 'danger',
+                dismissable: false
+            }
+        })
         }
         if(successCreate){
             dispatch({
@@ -83,24 +88,35 @@ const BlogCreateScreen = ({history}) => {
                 text, 
                 image
             }))
+        }else{
+            setMessage('Please fill in all fields')
         }     
     }
     
     return (
         <div className="form-container" onSubmit={submitHandler}>
             <h2 className="form-heading text-center">Create New Blog</h2>
+            {message && <Alert type="danger">{message}</Alert>}
             {loadingCreate ? <Spinner /> : (
                 <form>
                     {errorCreate && <Alert type="danger">{errorCreate}</Alert>}
                     <div class="mb-4">
                         <label for="title" class="form-label">Title</label>
-                        <input type="text" name="title" class="form-control" id="title" value={title} onChange={(e) => setTitle(e.target.value)} />
+                        <input 
+                            type="text" 
+                            name="title" 
+                            class="form-control" 
+                            id="title" 
+                            value={title} 
+                            onChange={(e) => setTitle(e.target.value)} 
+                            placeholder="Enter your blog title..."
+                        />
                     </div>
                     <div class="mb-4">
                         <Editor
                         apiKey="uq26sqh6ptu3m1qypa8quh5frkf26gd79zb02c1862hq2qxh"
                         onInit={(evt, editor) => editorRef.current = editor}
-                        initialValue="<p>This is the initial content of the editor.</p>"
+                        initialValue="<p>Write your blog content here...</p>"
                         init={{
                         height: 500,
                         menubar: false,
@@ -122,7 +138,7 @@ const BlogCreateScreen = ({history}) => {
                     </div>
                     {uploading && <Spinner />}
                     <div className="mb-4">
-                        <button  utton type="submit" class="btn btn-primary w-100" disabled={uploading && true}>Submit</button>
+                        <button type="submit" class="btn btn-primary w-100" disabled={uploading && true}>Submit</button>
                     </div>
                 </form>
             )} 

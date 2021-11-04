@@ -48,7 +48,6 @@ module.exports.getBlogById = async(req, res) =>{
 // @route   POST /api/blogs
 // @access  Private
 module.exports.createBlog = async (req, res) => {
-    console.log(req.user._id)
     const {title, text} = req.body;
     try {
         const newBlog = new Blog({

@@ -1,10 +1,11 @@
 import React, {useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { getUserDetails } from '../../actions/userActions'
+import { Link } from 'react-router-dom'
+import { deleteUser, getUserDetails } from '../../actions/userActions'
 import BlogComponent from '../../components/blogs/BlogComponent'
 import Spinner from '../../components/layout/Spinner'
 
-const ProfileScreen = ({match}) => {
+const ProfileScreen = ({match, history}) => {
 
     const dispatch = useDispatch()
 
@@ -14,12 +15,27 @@ const ProfileScreen = ({match}) => {
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo: loggedInUserInfo } = userLogin
 
+    const userDelete = useSelector(state => state.userDelete)
+    const { loading: loadingDelete, success: successDelete} = userDelete
+
+    useEffect(()=>{
+        dispatch(getUserDetails(match.params.id))
+    },[])
+
     useEffect(() => {
+        if(successDelete){
+            history.push('/blogs')
+        }
         if(!profileUserInfo || !profileUserInfo.user._id || profileUserInfo.user._id !== match.params.id ){
             dispatch(getUserDetails(match.params.id))
         }
-    }, [profileUserInfo, dispatch, match])
+    }, [profileUserInfo, dispatch, match, successDelete])
 
+    const deleteHandler = (id) =>{
+        if(window.confirm('Are you sure?')){
+            dispatch(deleteUser(id))
+        }
+    }
 
     return (
         <>
@@ -28,6 +44,13 @@ const ProfileScreen = ({match}) => {
             <h1>{ profileUserInfo && profileUserInfo.user.username}'s profile</h1>
             {(profileUserInfo && profileUserInfo.user._id) && (
                 <>
+                {(loggedInUserInfo && loggedInUserInfo._id && loggedInUserInfo._id === profileUserInfo.user._id) && (
+                    <>
+                    <button type="button" onClick={()=>deleteHandler(loggedInUserInfo._id)} className="btn btn-danger btn-sm">Delete Profile</button>
+                    {loadingDelete && <Spinner />}
+                    <Link to={`/profile/${loggedInUserInfo._id}/edit`}><button type="button" className="btn btn-info btn-sm text-light ms-2">Edit Profile</button></Link> 
+                    </>
+                )} 
                 <h3>Blogs</h3>
                 <div className="blogs-container">
                     <div className="row flex-wrap justify-content-center">
