@@ -4,7 +4,6 @@ const User = require('../models/user');
 const Blog = require('../models/blog');
 const passport = require('passport');
 
-
 // @desc    Register User
 // @route   POST /api/users/register
 // @access  Public
@@ -76,7 +75,7 @@ module.exports.updateUser = async (req, res, next) =>{
         const updatedUser = await User.findByIdAndUpdate(id, {...req.body}, { new: true }); 
         req.login(updatedUser, err => {
             if(err) return next(err);
-            res.json({message: 'Successfully updated profile!'});
+            res.json(updatedUser);
         })
     }catch(error){
         return res.status(404).json({ message: error.message})
@@ -93,12 +92,12 @@ module.exports.deleteUser = async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: 'User not found' })
         } else {
+            await Blog.deleteMany({author: user._id})
             await User.findByIdAndDelete(req.params.id)
             res.json({ message: 'User removed' })
         }
 
     } catch (error) {
-        console.error(error)
         res.status(500).json({ message: 'Server Error' })
     }
 }

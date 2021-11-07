@@ -40,7 +40,7 @@ const ProfileScreen = ({match, history}) => {
     return (
         <>
         { loading ? <Spinner /> : (
-            <div>
+            <div className="blogs-container">
             <h1>{ profileUserInfo && profileUserInfo.user.username}'s profile</h1>
             {(profileUserInfo && profileUserInfo.user._id) && (
                 <>
@@ -52,7 +52,7 @@ const ProfileScreen = ({match, history}) => {
                     </>
                 )} 
                 <h3>Blogs</h3>
-                <div className="blogs-container">
+                <div>
                     <div className="row flex-wrap justify-content-center">
                         {profileUserInfo.userBlogs && profileUserInfo.userBlogs.map((blog, index) =>{
                             return <BlogComponent key={blog._id} blog={blog} />

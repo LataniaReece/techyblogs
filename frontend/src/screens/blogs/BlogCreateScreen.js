@@ -6,6 +6,7 @@ import { createBlog } from '../../actions/blogActions';
 import Spinner from '../../components/layout/Spinner'
 import Alert from '../../components/layout/Alert';
 import { SET_GLOBAL_ALERT } from '../../actions/actionTypes/globalAlertTypes';
+import { BLOG_CREATE_RESET } from '../../actions/actionTypes/blogTypes';
 
 
 const BlogCreateScreen = ({history}) => {
@@ -47,6 +48,7 @@ const BlogCreateScreen = ({history}) => {
                     alertType: 'success'
                 }
             })
+            dispatch({type: BLOG_CREATE_RESET})
             history.push('/blogs')
         }
     }, [userInfo, successCreate, history])
@@ -74,13 +76,8 @@ const BlogCreateScreen = ({history}) => {
         }
     }
     
-    
     const submitHandler = (e) => {
         e.preventDefault();
-
-        if (editorRef.current) {
-            setText(editorRef.current.getContent())
-        }
 
         if(title && text && image){
             dispatch(createBlog({
@@ -88,7 +85,13 @@ const BlogCreateScreen = ({history}) => {
                 text, 
                 image
             }))
+        }else if(title && text){
+            dispatch(createBlog({
+                title, 
+                text
+            }))
         }else{
+            console.log(text, title, image)
             setMessage('Please fill in all fields')
         }     
     }
@@ -131,6 +134,7 @@ const BlogCreateScreen = ({history}) => {
                         'removeformat | help',
                         content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
                         }}
+                        onEditorChange={(newValue, editor) => setText(newValue)}
                         />
                     </div>
                     <div class="input-group mb-4">
@@ -138,7 +142,7 @@ const BlogCreateScreen = ({history}) => {
                     </div>
                     {uploading && <Spinner />}
                     <div className="mb-4">
-                        <button type="submit" class="btn btn-primary w-100" disabled={uploading && true}>Submit</button>
+                        <button type="submit" class="btn btn-primary w-100" disabled={uploading}>Submit</button>
                     </div>
                 </form>
             )} 

@@ -68,7 +68,7 @@ const BlogDetailsScreen = ({match, history}) =>{
                         </>
                     )}                    
                     <img src={blog.image.url} className="card-img-top my-3" alt={blog.title} />
-                    <p className="content" dangerouslySetInnerHTML={createMarkup(blog.text)}></p>                   
+                    <p className="content pb-5" dangerouslySetInnerHTML={createMarkup(blog.text)}></p>                   
                 </div>
             )}
             </>

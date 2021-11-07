@@ -11,7 +11,6 @@ const LocalStrategy = require('passport-local');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 
-const ExpressError = require('./utils/ExpressError');
 const blogRoutes = require('./routes/blogs.js');
 const userRoutes = require('./routes/users.js');
 const uploadRoutes = require('./routes/upload.js');

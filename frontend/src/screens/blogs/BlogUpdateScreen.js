@@ -52,7 +52,6 @@ const BlogUpdateScreen = ({match, history}) => {
         }
     }
     
-    
     const submitHandler = (e) => {
         e.preventDefault();
 
@@ -73,6 +72,17 @@ const BlogUpdateScreen = ({match, history}) => {
     }   
 
     useEffect(() =>{
+        if(!userInfo || !userInfo._id){
+            history.push('/login?redirect=/blogs')
+            dispatch({
+            type: SET_GLOBAL_ALERT,
+            payload: {
+                alert: 'You have to sign in first!',
+                alertType: 'danger',
+                dismissable: false
+            }
+        })
+        }
         if (successUpdate) {
             dispatch({ type: BLOG_UPDATE_RESET })
             dispatch({

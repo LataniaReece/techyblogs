@@ -44,10 +44,8 @@ module.exports.validateBlog = (req, res, next) =>{
 }
 module.exports.validateNewUser = (req, res, next) =>{      
     const {error} = registerUserSchema.validate(req.body);
-    console.log(error)
     if(error){
         const msg = error.details.map(el => el.message).join(',')
-        console.log(msg)
         return res.status(400).json({ message: msg });
     }else{
         next();

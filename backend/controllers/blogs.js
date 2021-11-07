@@ -1,6 +1,5 @@
 const Blog = require('../models/blog');
 const mongoose = require('mongoose');
-const { cloudinary } = require('../cloudinary');
 
 // @desc    Fetch all blogs
 // @route   GET /api/blogs
@@ -76,6 +75,7 @@ module.exports.createBlog = async (req, res) => {
 // @route   PUT /api/blogs/:id
 // @access  Private
 module.exports.updateBlog = async(req, res)=>{
+    
     const {id} = req.params;
     try {
         const blog = await Blog.findById(id)
