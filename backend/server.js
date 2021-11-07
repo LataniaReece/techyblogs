@@ -20,7 +20,8 @@ app.use(cors({ credentials: true, origin: "http://localhost:3000" }))
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
-const dbUrl = process.env.DB_URL || 'mongodb+srv://tania:ta123nia456@cluster0.nx2ig.mongodb.net/myBlog2021?retryWrites=true&w=majority';
+const dbUrl = process.env.DB_URL;
+
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -32,7 +33,7 @@ db.once('open', () =>{
     console.log('Database connected');
 });
 
-const secret = process.env.SECRET || 'thisshouldbeabettersecret';
+const secret = process.env.SECRET;
 
 const store = MongoStore.create({
     mongoUrl: dbUrl,
@@ -77,12 +78,18 @@ app.use('/api/blogs', blogRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/upload', uploadRoutes);
 
-// app.all('*', (req, res, next) =>{
-//     next(new ExpressError('Page Not Found', 404))
-// })
-
-const port = process.env.PORT || 5000;
-
-app.listen(port, () =>{
-    console.log(`Listening on port: ${port}`)
-});
+const PORT = process.env.PORT || 5000;
+ 
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, '/frontend/build')))
+ 
+    app.get('*', (req, res) =>
+        res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
+    )
+} else {
+    app.get('/', (req, res) => {
+        res.send('Api is running....')
+    })
+} 
+ 
+app.listen(PORT, console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`))

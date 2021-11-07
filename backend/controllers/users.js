@@ -1,4 +1,3 @@
-const generateToken = require('../utils/generateToken');
 const { cloudinary } = require('../cloudinary');
 const User = require('../models/user');
 const Blog = require('../models/blog');
@@ -17,8 +16,7 @@ module.exports.register = async (req, res, next) =>{
             if(err) return res.status(404).json({ message: 'Error logging in user, please try again' })
             return res.json({
                 _id: user._id,
-                username: user.username,
-                token: generateToken(user._id)
+                username: user.username
                 })
         })
     }catch(error){
@@ -37,8 +35,7 @@ module.exports.login = async (req, res) =>{
             if(err) { return res.status(404).json({ message: 'Username or password incorrect. Please try again!' }) }
           return res.json({
             _id: user._id,
-            username: user.username,
-            token: generateToken(user._id)
+            username: user.username
             })
         });
       })(req, res);

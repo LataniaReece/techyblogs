@@ -8,7 +8,8 @@
     "server": "nodemon backend/server --ignore './client/'",
     "client": "npm start --prefix frontend",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "seed:data": "node backend/seeder"
+    "seed:data": "node backend/seeder",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
   },
   "keywords": [],
   "author": "",
@@ -21,7 +22,6 @@
     "express": "^4.17.1",
     "express-session": "^1.17.2",
     "joi": "^17.4.2",
-    "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.1",
     "mongoose": "^6.0.7",
     "multer": "^1.4.3",
