@@ -21,6 +21,8 @@ app.use(cors({ credentials: true, origin: "http://localhost:3000" }))
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
+const __dirname = path.resolve()
+
 const dbUrl = process.env.DB_URL;
 
 mongoose.connect(dbUrl, {
