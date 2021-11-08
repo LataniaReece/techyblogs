@@ -27,9 +27,7 @@ const AppWrapper = () => {
 
     return (
       <Provider store={store}>
-        <Router>
             <App />
-        </Router>
       </Provider>
     )
   }
