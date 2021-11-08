@@ -80,6 +80,8 @@ app.use('/api/users', userRoutes);
 app.use('/api/upload', uploadRoutes);
 
 const PORT = process.env.PORT || 5000;
+
+const __dirname = path.resolve()
  
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '/frontend/build')))
