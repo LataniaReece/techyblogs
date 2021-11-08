@@ -66,8 +66,6 @@ const App = () => {
 
     return (
         <Router>                                   
-             <Switch>
-                <Route path='/' component={HomeScreen} exact />
                 <>
                     <main>
                         <Navbar />        
@@ -82,11 +80,11 @@ const App = () => {
                                 <Route path='/blogs/:id/edit' component={BlogUpdateScreen} exact/>
                                 <Route path='/blogs/:id' component={BlogDetailsScreen} exact/>
                                 <Route path='/blogs' component={AllBlogsScreen} exact/>
+                                <Route path='/' component={HomeScreen} exact />
                                 </Switch>
                             </div>
                     </main>
                 </>
-            </Switch>
         </Router>
     )
 }
