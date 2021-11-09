@@ -79,6 +79,8 @@ app.use('/api/blogs', blogRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/upload', uploadRoutes);
 
+var __dirname = path.resolve()
+
 const PORT = process.env.PORT || 5000;
  
 if (process.env.NODE_ENV === 'production') {

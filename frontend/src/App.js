@@ -21,13 +21,14 @@ import LoginScreen from './screens/users/LoginScreen';
 import RegisterScreen from './screens/users/RegisterScreen';
 import ProfileScreen from './screens/users/ProfileScreen';
 import { RESET_GLOBAL_ALERT } from './actions/actionTypes/globalAlertTypes';
-import ProfileEditScreen from './screens/users/ProfileEditScreen';
 
 const AppWrapper = () => {
 
     return (
       <Provider store={store}>
+        <Router>
             <App />
+        </Router>
       </Provider>
     )
   }
@@ -45,7 +46,6 @@ const App = () => {
 
     useEffect(() =>{
         if(globalAlertMessage){
-            console.log(globalAlertMessage)
             setMessage(globalAlertMessage.alert)
             setMessageType(globalAlertMessage.alertType)
             if(!globalAlertMessage.dismissable){
@@ -64,6 +64,8 @@ const App = () => {
 
     return (
         <Router>                                   
+             <Switch>
+                <Route path='/' component={HomeScreen} exact />
                 <>
                     <main>
                         <Navbar />        
@@ -73,16 +75,15 @@ const App = () => {
                                 <Route path="/login" component={LoginScreen} exact/>
                                 <Route path="/register" component={RegisterScreen} exact/>
                                 <Route path="/profile/:id" component={ProfileScreen} exact/>
-                                <Route path="/profile/:id/edit" component={ProfileEditScreen} exact/>
                                 <Route path='/blogs/new' component={BlogCreateScreen} exact/>
                                 <Route path='/blogs/:id/edit' component={BlogUpdateScreen} exact/>
                                 <Route path='/blogs/:id' component={BlogDetailsScreen} exact/>
                                 <Route path='/blogs' component={AllBlogsScreen} exact/>
-                                <Route path='/' component={HomeScreen} exact />
                                 </Switch>
                             </div>
                     </main>
                 </>
+            </Switch>
         </Router>
     )
 }
