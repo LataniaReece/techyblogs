@@ -124,6 +124,7 @@ form textarea {
 .blog-item{
   transition: all 0.3s ease-in-out;
   color: black;
+  background-color: #fffcfc;
 }
 
 .blog-item:hover{
@@ -164,6 +165,14 @@ form textarea {
   text-align: justify;
 }
 
+@media screen and (max-width:391px) {
+
+  .blog-first-item .card-title {
+    font-size: 2rem;
+  }
+}
+
+
 
 @media screen and (max-width:575px) {
   .blogs-container{
@@ -179,7 +188,7 @@ form textarea {
 }
 
 
-@media screen and (max-width:767px) {
+@media screen and (max-width:768px) {
   .blog-container.first{
     min-height: 250px;
     height: 100%;
@@ -189,4 +198,8 @@ form textarea {
     border-bottom: 1px solid rgb(223, 223, 223) !important;
   }
  
+  .blog-first-item {
+    height: auto;
+    min-height: unset;
+  }
 }

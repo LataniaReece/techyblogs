@@ -9,7 +9,7 @@ const BlogComponent = ({blog, first}) => {
                 <img src={blog.image.url} className="card-img-top" alt={blog.title} />
                 <div className="card-img-overlay p-4">
                   <h5 className="card-title">{blog.title}</h5>
-                  <div class="blog-info d-flex wg-100">
+                  <div class="blog-info d-flex flex-column flex-sm-row wg-100">
                     <p class="blog-date me-2"><i class="far fa-calendar-alt me-2 icon"></i><span>{blog.relativeTime}</span></p>
                     <p class="blog-author"><i class="fas fa-user me-2 icon"></i><span>{blog.author.username}</span></p>
                   </div>
