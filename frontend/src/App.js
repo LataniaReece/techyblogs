@@ -1,9 +1,9 @@
-import React, { useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Provider, useDispatch, useSelector} from 'react-redux';
-import store from './store'
-import './App.css'
-import '../src/components/layout/layout.css'
+import { Provider, useDispatch, useSelector } from 'react-redux';
+import store from './store';
+import './App.css';
+import '../src/components/layout/layout.css';
 
 // Components
 
@@ -23,70 +23,74 @@ import ProfileScreen from './screens/users/ProfileScreen';
 import { RESET_GLOBAL_ALERT } from './actions/actionTypes/globalAlertTypes';
 
 const AppWrapper = () => {
-
-    return (
-      <Provider store={store}>
-        <Router>
-            <App />
-        </Router>
-      </Provider>
-    )
-  }
-
+  return (
+    <Provider store={store}>
+      <Router>
+        <App />
+      </Router>
+    </Provider>
+  );
+};
 
 const App = () => {
-    const [ message, setMessage] = useState('')
-    const [ messageType, setMessageType] = useState('')
-    const [ messageDismissable, setMessageDismissable] = useState(true)
+  const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState('');
+  const [messageDismissable, setMessageDismissable] = useState(true);
 
-    const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-    const globalAlert = useSelector(state => state.globalAlert)
-    const { alert: globalAlertMessage } = globalAlert
+  const globalAlert = useSelector((state) => state.globalAlert);
+  const { alert: globalAlertMessage } = globalAlert;
 
-    useEffect(() =>{
-        if(globalAlertMessage){
-            setMessage(globalAlertMessage.alert)
-            setMessageType(globalAlertMessage.alertType)
-            if(!globalAlertMessage.dismissable){
-                setMessageDismissable(false)
-            }
-            dispatch({ type: RESET_GLOBAL_ALERT})
-            setTimeout(() =>{
-                setMessage('')
-            }, 5000)
-            if(localStorage.getItem('alert')){
-                localStorage.removeItem('alert')
-            }
-        }
+  useEffect(() => {
+    if (globalAlertMessage) {
+      setMessage(globalAlertMessage.alert);
+      setMessageType(globalAlertMessage.alertType);
+      if (!globalAlertMessage.dismissable) {
+        setMessageDismissable(false);
+      }
+      dispatch({ type: RESET_GLOBAL_ALERT });
+      setTimeout(() => {
+        setMessage('');
+      }, 5000);
+      if (localStorage.getItem('alert')) {
+        localStorage.removeItem('alert');
+      }
+    }
+  }, [globalAlertMessage, globalAlert]);
 
-    }, [globalAlertMessage, globalAlert])
-
-    return (
-        <Router>                                   
-             <Switch>
-                <Route path='/' component={HomeScreen} exact />
-                <>
-                    <main>
-                        <Navbar />        
-                            <div className="container pt-5"> 
-                                { message && <Alert type={messageType} dismissable={messageDismissable}>{message}</Alert>}
-                                <Switch>
-                                <Route path="/login" component={LoginScreen} exact/>
-                                <Route path="/register" component={RegisterScreen} exact/>
-                                <Route path="/profile/:id" component={ProfileScreen} exact/>
-                                <Route path='/blogs/new' component={BlogCreateScreen} exact/>
-                                <Route path='/blogs/:id/edit' component={BlogUpdateScreen} exact/>
-                                <Route path='/blogs/:id' component={BlogDetailsScreen} exact/>
-                                <Route path='/blogs' component={AllBlogsScreen} exact/>
-                                </Switch>
-                            </div>
-                    </main>
-                </>
-            </Switch>
-        </Router>
-    )
-}
-
+  return (
+    <Router>
+      <Switch>
+        <Route path='/' component={HomeScreen} exact />
+        <>
+          <main>
+            <Navbar />
+            <div className='container pt-5'>
+              {message && (
+                <Alert type={messageType} dismissable={messageDismissable}>
+                  {message}
+                </Alert>
+              )}
+              <Switch>
+                <Route path='/login' component={LoginScreen} exact />
+                <Route path='/register' component={RegisterScreen} exact />
+                <Route path='/profile/:id' component={ProfileScreen} exact />
+                <Route path='/blogs/new' component={BlogCreateScreen} exact />
+                <Route
+                  path='/blogs/:id/edit'
+                  component={BlogUpdateScreen}
+                  exact
+                />
+                <Route path='/blogs/:id' component={BlogDetailsScreen} exact />
+                <Route path='/blogs' component={AllBlogsScreen} exact />
+              </Switch>
+            </div>
+          </main>
+        </>
+      </Switch>
+    </Router>
+  );
+};
 
 export default AppWrapper;
