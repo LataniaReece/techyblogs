@@ -1,3 +1,6 @@
 # TechyBlogs: MERN Stack App
-Full site: https://techyblog2021.herokuapp.com/ . Responsive MERN Fullstack application. REST API app with JSON. Express sessions, sanitize-html, joi used in backend. Used passport library for authentication. React Frontend with Bootstrap, react-redux. 
-Multer and Cloudinary used for image storage. Use of Postman to develop/debug backend routes.
+Full site: https://techyblog2021.herokuapp.com/ .      A template tech blog app using the React, Express, Mongo and
+                  Nodejs. This app showcases my knowledge of the fullstack side
+                  of web development.
+                  Uses bootstrap, and redux in the frontend with REST APIs and
+                  authentication in the backend.
