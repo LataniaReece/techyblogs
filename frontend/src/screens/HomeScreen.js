@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const HomeScreen = () => {
   return (
     <div className='home'>
-      <h1>Techy Blog</h1>
+      <h1>Techy Blogs</h1>
       <p className='lead container'>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua
